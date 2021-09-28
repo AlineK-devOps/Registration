@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Registration</string>
+    <string name="name">Имя</string>
+    <string name="surname">Фамилия</string>
+    <string name="birthday">Дата рождения</string>
+    <string name="password">Пароль</string>
+    <string name="confirm_password">Подтверждение пароля</string>
+
 </resources>
