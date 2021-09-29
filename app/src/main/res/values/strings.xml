@@ -5,5 +5,7 @@
     <string name="birthday">Дата рождения</string>
     <string name="password">Пароль</string>
     <string name="confirm_password">Подтверждение пароля</string>
+    <string name="registration_label">Создание аккаунта</string>
+    <string name="registration_button">Регистрация</string>
 
 </resources>
