@@ -42,6 +42,24 @@ class RegistrationActivity : AppCompatActivity(), RegistrationView {
         setContentView(R.layout.activity_registration)
 
         bind()
+
+        if (savedInstanceState != null){
+            nameEt.setText(savedInstanceState.getString("name"))
+            surnameEt.setText(savedInstanceState.getString("surname"))
+            birthDateEt.setText(savedInstanceState.getString("birthdate"))
+            passwordEt.setText(savedInstanceState.getString("password"))
+            passwordConfirmEt.setText(savedInstanceState.getString("passwordConfirm"))
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putString("name", nameEt.text.toString())
+        outState.putString("surname", surnameEt.text.toString())
+        outState.putString("birthdate", birthDateEt.text.toString())
+        outState.putString("password", passwordEt.text.toString())
+        outState.putString("passwordConfirm", passwordConfirmEt.text.toString())
     }
 
     private fun bind(){
