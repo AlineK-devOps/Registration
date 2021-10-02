@@ -7,5 +7,7 @@
     <string name="confirm_password">Подтверждение пароля</string>
     <string name="registration_label">Создание аккаунта</string>
     <string name="registration_button">Регистрация</string>
-
+    <string name="hello_button">Приветствие</string>
+    <string name="hello_dialog">Здравствуй,</string>
+    <string name="accept">OK</string>
 </resources>

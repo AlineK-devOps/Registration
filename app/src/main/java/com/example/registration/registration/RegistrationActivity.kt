@@ -13,6 +13,7 @@ import android.app.DatePickerDialog.OnDateSetListener
 import android.widget.Button
 import androidx.core.widget.addTextChangedListener
 import com.example.registration.data.User
+import com.example.registration.main.MainActivity
 import com.example.registration.utils.Validator
 import com.google.android.material.textfield.TextInputLayout
 import java.util.*
@@ -62,13 +63,34 @@ class RegistrationActivity : AppCompatActivity(), RegistrationView {
         outState.putString("passwordConfirm", passwordConfirmEt.text.toString())
     }
 
+    override fun changeError(error: String?, field: RegistrationField){
+        when (field) {
+            RegistrationField.NAME -> nameTextInputLayout.error = error
+            RegistrationField.SURNAME -> surnameTextInputLayout.error = error
+            RegistrationField.BIRTHDATE -> birthDateTextInputLayout.error = error
+            RegistrationField.PASSWORD -> passwordTextInputLayout.error = error
+            RegistrationField.PASSWORD_CONFIRM -> passwordConfirmTextInputLayout.error = error
+        }
+    }
+
+    override fun setButtonDisabled() {
+        registrationButton.isEnabled = false
+    }
+
+    override fun setButtonEnabled() {
+        registrationButton.isEnabled = true
+    }
+
+    override fun openMainScreen(name: String){
+        MainActivity.start(this, name)
+    }
+
     private fun bind(){
         presenter.attachView(this)
 
         title = resources.getText(R.string.registration_label)
 
         registrationButton = findViewById(R.id.registrationButton)
-
         nameTextInputLayout = findViewById(R.id.nameTextInputLayout)
         surnameTextInputLayout = findViewById(R.id.surnameTextInputLayout)
         birthDateTextInputLayout = findViewById(R.id.birthdayTextInputLayout)
@@ -103,6 +125,10 @@ class RegistrationActivity : AppCompatActivity(), RegistrationView {
         birthDateEt.addTextChangedListener {
             presenter.checkField(birthDateEt.text.toString(), RegistrationField.BIRTHDATE)
         }
+
+        registrationButton.setOnClickListener {
+            presenter.onRegistrationButtonClicked()
+        }
     }
 
     private fun callDatePicker() {
@@ -116,23 +142,5 @@ class RegistrationActivity : AppCompatActivity(), RegistrationView {
             calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)
         )
         datePickerDialog.show()
-    }
-
-    override fun changeError(error: String?, field: RegistrationField){
-        when (field) {
-            RegistrationField.NAME -> nameTextInputLayout.error = error
-            RegistrationField.SURNAME -> surnameTextInputLayout.error = error
-            RegistrationField.BIRTHDATE -> birthDateTextInputLayout.error = error
-            RegistrationField.PASSWORD -> passwordTextInputLayout.error = error
-            RegistrationField.PASSWORD_CONFIRM -> passwordConfirmTextInputLayout.error = error
-        }
-    }
-
-    override fun setButtonDisabled() {
-        registrationButton.isEnabled = false
-    }
-
-    override fun setButtonEnabled() {
-        registrationButton.isEnabled = true
     }
 }

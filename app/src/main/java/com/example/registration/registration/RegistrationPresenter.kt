@@ -74,14 +74,18 @@ class RegistrationPresenter(private val user: User) : BasePresenter<Registration
         checkButtonEnable()
     }
 
+    fun onRegistrationButtonClicked(){
+        user.name?.let { view?.openMainScreen(it) }
+    }
+
+    fun getCurrentDate(): Calendar {
+        return Calendar.getInstance()
+    }
+
     private fun checkButtonEnable(){
         if (user.isFieldsValid())
             view?.setButtonEnabled()
         else
             view?.setButtonDisabled()
-    }
-
-    fun getCurrentDate(): Calendar {
-        return Calendar.getInstance()
     }
 }
