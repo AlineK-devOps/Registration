@@ -75,6 +75,7 @@ class RegistrationPresenter(private val user: User) : BasePresenter<Registration
     }
 
     fun onRegistrationButtonClicked(){
+        view?.saveSession(user.name, user.surname, user.birthdate, user.password)
         user.name?.let { view?.openMainScreen(it) }
     }
 

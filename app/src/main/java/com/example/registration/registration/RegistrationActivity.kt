@@ -10,6 +10,7 @@ import android.widget.DatePicker
 
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
+import android.content.SharedPreferences
 import android.widget.Button
 import androidx.core.widget.addTextChangedListener
 import com.example.registration.data.User
@@ -21,7 +22,13 @@ import java.util.*
 
 class RegistrationActivity : AppCompatActivity(), RegistrationView {
 
+    companion object{
+        var APP_PREFERENCES = "user"
+    }
+
     private val presenter by lazy { RegistrationPresenter(User()) }
+
+    private lateinit var prefs: SharedPreferences
 
     private lateinit var registrationButton: Button
 
@@ -43,6 +50,11 @@ class RegistrationActivity : AppCompatActivity(), RegistrationView {
         setContentView(R.layout.activity_registration)
 
         bind()
+
+        if (prefs.contains("name")){
+            val name = prefs.getString("name", "none")
+            name?.let { openMainScreen(it) }
+        }
 
         if (savedInstanceState != null){
             nameEt.setText(savedInstanceState.getString("name"))
@@ -73,6 +85,17 @@ class RegistrationActivity : AppCompatActivity(), RegistrationView {
         }
     }
 
+    override fun saveSession(name: String?, cacheSurname: String?, cacheBirthdate: String?, cachePassword: String?) {
+        val editor = prefs.edit()
+
+        editor.putString("name", name)
+        editor.putString("surname", cacheSurname)
+        editor.putString("birthdate", cacheBirthdate)
+        editor.putString("password", cachePassword)
+
+        editor.apply()
+    }
+
     override fun setButtonDisabled() {
         registrationButton.isEnabled = false
     }
@@ -87,6 +110,8 @@ class RegistrationActivity : AppCompatActivity(), RegistrationView {
 
     private fun bind(){
         presenter.attachView(this)
+
+        prefs = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE)
 
         title = resources.getText(R.string.registration_label)
 
